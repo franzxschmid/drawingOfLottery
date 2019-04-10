@@ -24,17 +24,33 @@ public class TipSubmits {
     //Main
 	public static void main(String[] args) {
 		
+	  //Leeres Array fÃ¼r die Tipps
+	   int[] tips = new int[getNumberOfTips()];
+		
        //Scanner instanzieren 
 	   Scanner scanner = new Scanner(System.in);
 	   
-	   //Leeres Array für die Tipps
-	   int[] tips = new int[getNumberOfTips()];
-	   
-	   //Schleife für die eigentliche Tippabgabe
+	   //Schleife fÃ¼r die eigentliche Tippabgabe
 	   int i = 0; 
 	   while (i < getNumberOfTips()) {
-		   System.out.println("Please, submit Tip Number " + (i + 1) + ":");
-		   int tip = scanner.nextInt();
+		   
+		   System.out.println("Please, submit your Tip as an Integer. Tip " + (i + 1) + ":");
+		   
+		   int tip = new Integer(0);
+		   
+		   try {
+			   tip = scanner.nextInt(); 	   
+		   }
+		   catch (InputMismatchException em){
+			   System.out.println("Because you don't know what an Integer is, I'll just tip 1, 2, 3, 4, 5, 6 for you");  
+			   tips[numberOfTips-6] = 1;
+			   tips[numberOfTips-5] = 2;	
+			   tips[numberOfTips-4] = 3;
+			   tips[numberOfTips-3] = 4;		   
+			   tips[numberOfTips-2] = 5;
+			   tips[numberOfTips-1] = 6;
+			   break;
+		   }
 		   
 		   //Check ob Wert bereits vorhanden
 		   if ((tip > 0) && (tip < 50 && !CheckArray.isValueInArray(tips, tip))) {
@@ -42,17 +58,19 @@ public class TipSubmits {
 			   i++;	 
 		   } else {
 			   System.out.println("Please submit a Number beetween 1 and 49 that hasn't been submitted before: ");
+
 		   } 
+		   
 	   }
 	   
-	   //Scanner schließen
+	   //Scanner schlieÃŸen
 	   scanner.close();
 	   
 	   //Sortiert die Zahlen und bedankt sich
 	   Arrays.sort(tips);
 	   System.out.println("You have submitted your Tips. Thank you!");
 	   
-	   //Pausiert Programmm für die Spannung
+	   //Pausiert Programmm fÃ¼r die Spannung
 	   try
 	   {
 	       Thread.sleep(4000);
@@ -65,7 +83,7 @@ public class TipSubmits {
 	   //Aufruf der Ziehung
 	   int[] drawnNumbers = LotteryGenerator.getDrawnNumbers();
 		
-	   //Auflösung
+	   //AuflÃ¶sung
 	   if (tips == drawnNumbers) {
 		   System.out.println("You won!");	
 	   } else {
